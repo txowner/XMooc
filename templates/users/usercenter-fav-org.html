@@ -1,0 +1,70 @@
+{% extends 'usercenter-base.html' %}
+{% load static %}
+
+{% block custom_title %} 我的收藏- XMooc在线学习网 {% endblock %}
+
+{% block custom_bread %} 我的收藏 {% endblock %}
+
+
+{% block custom_right %}
+    <div class="right" >
+            <div class="personal_des Releasecont">
+                <div class="head">
+                    <h1>我的收藏</h1>
+                </div>
+
+            </div>
+            <div class="personal_des permessage">
+                <div class="head">
+                    <ul class="tab_header messagehead">
+                        <li><a href="{% url 'user:user_fav_courses' %}">公开课程</a></li>
+                        <li class="active"><a href="{% url 'user:user_fav_orgs' %}">课程机构</a> </li>
+                        <li><a href="{% url 'user:user_fav_teachers' %}">授课教师 </a></li>
+                    </ul>
+                </div>
+                <div class="messagelist">
+                {% for org in orgs.object_list %}
+                    <div class="messages butler_list company company-fav-box">
+                        <dl class="des fr">
+                            <dt>
+                                <a href="{% url 'org:home' org.id %}">
+                                    <img width="160" height="90" src="{{ MEDIA_URL }}{{ org.images }}"/>
+                                </a>
+                            </dt>
+                            <dd>
+                                <h1><a href="{% url 'org:home' org.id %}">{{ org.name }}</a></h1>
+                                <div class="pic fl" style="width:auto;">
+                                    <img src="{% static 'images/authentication.png' %}"/>
+                                    <img src="{% static 'images/gold.png' %}"/>
+                                </div>
+                                <span class="c8 clear">{{ org.address }}</span>
+                                <div class="delete jsDeleteFav_org" data-favid="{{ org.id }}"></div>
+                            </dd>
+                        </dl>
+                    </div>
+                {% endfor %}
+                </div>
+                <div class="pageturn">
+                    <ul class="pagelist">
+                        {% if orgs.has_previous %}
+                            <li class="long"><a href="?{{ orgs.previous_page_number.querystring }}" >上一页</a></li>
+                        {% endif %}
+                        {% for page in orgs.pages %}
+                            {% if page %}
+                                {% ifequal page orgs.number %}
+                                    <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                                {% else %}
+                                    <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                                {% endifequal %}
+                            {% else %}
+                                <li class="none"><a href="">...</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if orgs.has_next %}
+                            <li class="long"><a href="?{{ orgs.next_page_number.querystring }}">下一页</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+{% endblock %}
