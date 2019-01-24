@@ -31,7 +31,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # 指定 用户验证的类
-AUTH_USER_MODEL = 'users.UserProfile'   # 注意，这里没有models， 不是晚会中能的路径， 是 app 下面的 验证类
+AUTH_USER_MODEL = 'users.UserProfile'   # 注意，这里没有models， 不是完整的路径， 是 某个app 下面的 验证类
 
 # 指定 验证用户登录的类(一般是用来扩展默认验证方法的功能，再覆盖)
 AUTHENTICATION_BACKENDS = ['users.views.CustomBackends']
